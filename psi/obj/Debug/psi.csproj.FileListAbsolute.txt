@@ -1,0 +1,13 @@
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\bin\Debug\psi.exe.config
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\bin\Debug\psi.exe
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\obj\Debug\psi.csprojAssemblyReference.cache
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\obj\Debug\psi.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\obj\Debug\psi.exe
+D:\Documents\GitHub\BIPSI\semestralka\psi\psi\obj\Debug\psi.pdb
+C:\Users\matfr\source\repos\psi\psi\bin\Debug\psi.exe.config
+C:\Users\matfr\source\repos\psi\psi\bin\Debug\psi.exe
+C:\Users\matfr\source\repos\psi\psi\bin\Debug\psi.pdb
+C:\Users\matfr\source\repos\psi\psi\obj\Debug\psi.csprojAssemblyReference.cache
+C:\Users\matfr\source\repos\psi\psi\obj\Debug\psi.csproj.CoreCompileInputs.cache
+C:\Users\matfr\source\repos\psi\psi\obj\Debug\psi.exe
+C:\Users\matfr\source\repos\psi\psi\obj\Debug\psi.pdb
