@@ -43,18 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthBehaviour.cs" />
+    <Compile Include="Behaviour\AuthBehaviour.cs" />
     <Compile Include="InvalidInputException.cs" />
-    <Compile Include="ClientResponseHandler.cs" />
-    <Compile Include="EndConnectionBehaviour.cs" />
-    <Compile Include="MessagingBehaviour.cs" />
-    <Compile Include="ResponseCode.cs" />
+    <Compile Include="Util\ClientResponseHandler.cs" />
+    <Compile Include="Behaviour\EndConnectionBehaviour.cs" />
+    <Compile Include="Behaviour\MessagingBehaviour.cs" />
+    <Compile Include="Util\ResponseCode.cs" />
     <Compile Include="ConnectionHandler.cs" />
-    <Compile Include="BehaviourComponent.cs" />
+    <Compile Include="Behaviour\BehaviourComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RobotControllerBehaviour.cs" />
-    <Compile Include="RobotDirection.cs" />
+    <Compile Include="Behaviour\RobotControllerBehaviour.cs" />
+    <Compile Include="Util\RobotDirection.cs" />
+    <Compile Include="Behaviour\RobotDirectionBehaviour.cs" />
+    <Compile Include="Behaviour\RobotNavigationBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

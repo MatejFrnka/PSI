@@ -41,21 +41,28 @@ namespace psi
                 {
                     
                     message[o++] = (byte)i;
+
                     if (i == '\a')
                         messageEnding = true;
                     else if (messageEnding && i == '\b')
                     {
                         string response = null;
+                        
                         //message ended;
                         //check recharging
                         try
                         {
                             response = currentBehaviour.HandleInput(message, o, ref this.currentBehaviour);
                         }
-                        catch (InvalidInputException e)
+                        catch (Exception e)
                         {
-                            response = ResponseCode.SERVER_SYNTAX_ERROR;
-                            currentBehaviour = new EndConnectionBehaviour();
+                            if (e is InvalidInputException || e is FormatException)
+                            {
+                                response = ResponseCode.SERVER_SYNTAX_ERROR;
+                                currentBehaviour = new EndConnectionBehaviour();
+                            }
+                            else
+                                throw;
                         }
                         finally
                         {
@@ -65,60 +72,25 @@ namespace psi
                         byte[] msg = System.Text.Encoding.ASCII.GetBytes(response);
                         // Send back a response.
                         stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", response);
                     }
                     else
                     {
                         messageEnding = false;
                     }
-                    if (this.currentBehaviour.endConnection())
-                        break;
 
-                }
-
-                // Loop to receive all the data sent by the client.
-                /*
-                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-                {
-                    // Translate data bytes to a ASCII string.
-                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                    Console.WriteLine("Received: {0}", data);
-
-                    string response = null;
-                    fill_array(bytes, message, i, o);
-                    o = o + i;
-
-
-                    if (o < 1 || message[o - 1] != '\b')
-                        continue;
-                    if (o < 2 || message[o - 2] != '\a')
-                        continue;
-
-                    foreach (Tuple<int, byte[]> item in splitInputs(ref message, ref o))
+                    if (o == this.currentBehaviour.maxLen)
                     {
-                        try
-                        {
-                            response = currentBehaviour.HandleInput(item.Item2, item.Item1, ref this.currentBehaviour);
-                        }
-                        catch (InvalidInputException e)
-                        {
-                            response = ResponseCode.SERVER_SYNTAX_ERROR;
-                            currentBehaviour = new EndConnectionBehaviour();
-                        }
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(response);
-                        // Send back a response.
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(ResponseCode.SERVER_SYNTAX_ERROR);
                         stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", response);
-
-                        if (this.currentBehaviour.endConnection())
-                            break;
+                        currentBehaviour = new EndConnectionBehaviour();
                     }
+
                     if (this.currentBehaviour.endConnection())
                         break;
+
                 }
-                */
             }
-            catch (Exception e)
+            catch (InvalidOperationException e) //
             {
                 Console.WriteLine(e.Message);
             }
