@@ -21,7 +21,6 @@ namespace psi
 
             client.ReceiveTimeout = 1000;
             // Buffer for reading data
-            Byte[] bytes = new Byte[256];
             Byte[] message = new Byte[256];
 
             Console.WriteLine("Connected!");
@@ -33,10 +32,52 @@ namespace psi
             string data;
             int i;
             int o = 0;
+            bool messageEnding = false;
 
             try
             {
+
+                while ((i = stream.ReadByte()) != -1)
+                {
+                    
+                    message[o++] = (byte)i;
+                    if (i == '\a')
+                        messageEnding = true;
+                    else if (messageEnding && i == '\b')
+                    {
+                        string response = null;
+                        //message ended;
+                        //check recharging
+                        try
+                        {
+                            response = currentBehaviour.HandleInput(message, o, ref this.currentBehaviour);
+                        }
+                        catch (InvalidInputException e)
+                        {
+                            response = ResponseCode.SERVER_SYNTAX_ERROR;
+                            currentBehaviour = new EndConnectionBehaviour();
+                        }
+                        finally
+                        {
+                            o = 0;
+                            messageEnding = false;
+                        }
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(response);
+                        // Send back a response.
+                        stream.Write(msg, 0, msg.Length);
+                        Console.WriteLine("Sent: {0}", response);
+                    }
+                    else
+                    {
+                        messageEnding = false;
+                    }
+                    if (this.currentBehaviour.endConnection())
+                        break;
+
+                }
+
                 // Loop to receive all the data sent by the client.
+                /*
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
                     // Translate data bytes to a ASCII string.
@@ -75,27 +116,10 @@ namespace psi
                     if (this.currentBehaviour.endConnection())
                         break;
                 }
+                */
             }
             catch (Exception e)
             {
-                if (message[o - 1] == '\a')
-                    message[o++] = (byte)'\b';
-                if (message[o - 2] != '\a')
-                {
-                    message[o++] = (byte)'\a';
-                    message[o++] = (byte)'\b';
-                }
-
-                try
-                {
-                    currentBehaviour.HandleInput(message, o, ref this.currentBehaviour);
-                }
-                catch (InvalidInputException b)
-                {
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(ResponseCode.SERVER_SYNTAX_ERROR);
-                    stream.Write(msg, 0, msg.Length);
-                }
-
                 Console.WriteLine(e.Message);
             }
             // Shutdown and end connection
