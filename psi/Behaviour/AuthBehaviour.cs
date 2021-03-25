@@ -37,11 +37,13 @@ namespace psi
             {
                 clientName = ClientResponseHandler.CLIENT_USERNAME(input, length);
                 maxLen = ClientResponseHandler.ClientResponseMaxSize.CLIENT_KEY_ID;
+                Console.WriteLine(clientName);
                 return ResponseCode.SERVER_KEY_REQUEST;
             }
             if (clientId == null)
             {
                 clientId = ClientResponseHandler.CLIENT_KEY_ID(input, length);
+                Console.WriteLine(clientId);
                 maxLen = ClientResponseHandler.ClientResponseMaxSize.CLIENT_CONFIRMATION;
                 if (keyValues.ContainsKey(clientId))
                 {
@@ -58,6 +60,7 @@ namespace psi
                 uint val = (getHash(clientId) + keyValues[clientId].clientKey) % MOD_VAL;
                 if (val == ClientResponseHandler.CLIENT_CONFIRMATION(input, length))
                 {
+                    Console.WriteLine(val);
                     behaviour = new RobotDirectionBehaviour();
                     return ResponseCode.SERVER_OK + ResponseCode.SERVER_MOVE;
                 }

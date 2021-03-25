@@ -8,6 +8,10 @@ namespace psi
 {
     class EndConnectionBehaviour : BehaviourComponent
     {
+        public EndConnectionBehaviour()
+        {
+            
+        }
         public override string HandleInput(byte[] input, int length, ref BehaviourComponent output)
         {
             throw new NotImplementedException();

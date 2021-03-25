@@ -54,6 +54,16 @@ namespace psi
             return System.Text.Encoding.ASCII.GetString(bytes, 0, length > 2 ? length - 2 : 0);
         }
 
+        public static bool CLIENT_FULL_POWER(byte[] bytes, int length)
+        {
+            string msg = System.Text.Encoding.ASCII.GetString(bytes, 0, length);
+            return msg == "FULL POWER\a\b";
+        }
+        public static bool isRechargeRequest(byte[] bytes, int length)
+        {
+            return "RECHARGING\a\b" == System.Text.Encoding.ASCII.GetString(bytes, 0, length);
+        }
+
         public static
 
         class ClientResponseMaxSize

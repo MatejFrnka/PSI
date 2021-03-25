@@ -18,20 +18,6 @@ namespace psi
 
             RobotPos currentPos = ClientResponseHandler.CLIENT_OK(input, length);
             Console.WriteLine(currentPos);
-            /*
-            if (i == 0)
-            {
-                i++;
-                return ResponseCode.SERVER_TURN_RIGHT;
-            }
-            if (i < 5)
-            {
-                i++;
-                Console.WriteLine(currentPos);
-                return ResponseCode.SERVER_MOVE;
-            }*/
-
-
             if (currentPos.distanceToOrigin() == 0)
             {
                 output = new MessagingBehaviour();
