@@ -15,7 +15,11 @@ namespace psi
         {
             return new RobotPos() { x = robotPos.x + x, y = robotPos.y + y };
         }
-        public string getCommand() { return command; }
+        public string getCommand() {
+            if (this.command is null || this.command == "")
+                throw new Exception("command is null");
+            return this.command;
+        }
 
         public abstract RobotDirection turnLeft();
         public abstract RobotDirection turnRight();

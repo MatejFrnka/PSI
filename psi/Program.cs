@@ -17,11 +17,15 @@ namespace psi
             RobotPos down = new RobotPos() { x = 0, y = -1 };
             RobotPos left = new RobotPos() { x = -1, y = 0 };
             RobotPos right = new RobotPos() { x = 1, y = 0 };
-            var a = RobotDirection.getDirection(robotPos, up);
             Console.WriteLine(RobotDirection.getDirection(robotPos, up) is RobotDirectionUp);
             Console.WriteLine(RobotDirection.getDirection(robotPos, down) is RobotDirectionDown);
             Console.WriteLine(RobotDirection.getDirection(robotPos, left) is RobotDirectionLeft);
             Console.WriteLine(RobotDirection.getDirection(robotPos, right) is RobotDirectionRight);
+            Console.WriteLine(new RobotDirectionUp("").getNextPos(robotPos) == up);
+            Console.WriteLine(new RobotDirectionDown("").getNextPos(robotPos) == down);
+            Console.WriteLine(new RobotDirectionLeft("").getNextPos(robotPos) == left);
+            Console.WriteLine(new RobotDirectionRight("").getNextPos(robotPos) == right);
+
 
 
 

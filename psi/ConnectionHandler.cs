@@ -18,7 +18,7 @@ namespace psi
 
         public void startListening(TcpClient client)
         {
-
+            Console.Clear();
             client.ReceiveTimeout = 1000;
             // Buffer for reading data
             Byte[] message = new Byte[256];
@@ -29,7 +29,6 @@ namespace psi
             // Get a stream object for reading and writing
             NetworkStream stream = client.GetStream();
 
-            string data;
             int i;
             int o = 0;
             bool messageEnding = false;
@@ -39,7 +38,6 @@ namespace psi
 
                 while ((i = stream.ReadByte()) != -1)
                 {
-                    
                     message[o++] = (byte)i;
 
                     if (i == '\a')
@@ -90,56 +88,12 @@ namespace psi
 
                 }
             }
-            catch (InvalidOperationException e) //
+            catch (System.IO.IOException e) //
             {
                 Console.WriteLine(e.Message);
             }
             // Shutdown and end connection
             client.Close();
-        }
-
-        public bool verifyInput(string input)
-        {
-            return true;
-        }
-        private void fill_array(byte[] from, byte[] to, int fromLen, int fillFrom)
-        {
-            for (int i = 0; i < fromLen; i++)
-            {
-                to[i + fillFrom] = from[i];
-            }
-        }
-        private List<Tuple<int, byte[]>> splitInputs(ref byte[] input, ref int length)
-        {
-            bool endSequence = false;
-            List<Tuple<int, byte[]>> result = new List<Tuple<int, byte[]>>();
-            byte[] current = new byte[256];
-            int current_len = 0;
-            for (int i = 0; i < length; i++)
-            {
-                if (input[i] == '\a')
-                {
-                    endSequence = true;
-                    current[current_len++] = input[i];
-                }
-                else if (input[i] == '\b' && endSequence)
-                {
-
-                    current[current_len++] = input[i];
-                    result.Add(new Tuple<int, byte[]>(current_len, current));
-                    current_len = 0;
-                    current = new byte[256];
-                    endSequence = false;
-                }
-                else
-                {
-                    endSequence = false;
-                    current[current_len++] = input[i];
-                }
-            }
-            input = current;
-            length = current_len;
-            return result;
         }
     }
 }

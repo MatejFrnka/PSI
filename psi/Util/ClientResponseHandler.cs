@@ -41,7 +41,7 @@ namespace psi
             if (length < 5)
                 throw new InvalidInputException();
             string value = System.Text.Encoding.ASCII.GetString(bytes, 3, length - 5);
-            if (!Regex.IsMatch(value, @"^[\d]+ -?[\d]+$"))
+            if (!Regex.IsMatch(value, @"^-?[\d]+ -?[\d]+$"))
                 throw new InvalidInputException();
             int rx = Int32.Parse(value.Split(' ')[0]);
             int ry = Int32.Parse(value.Split(' ')[1]);

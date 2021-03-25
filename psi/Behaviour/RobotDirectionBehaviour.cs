@@ -9,8 +9,15 @@ namespace psi
     class RobotDirectionBehaviour : RobotNavigationBehaviour
     {
         RobotPos start = null;
+        bool turned = false;
         protected override string HandleBehaviour(RobotPos currentPos, ref BehaviourComponent output)
         {
+            if (turned)
+            {
+                turned = false;
+                return ResponseCode.SERVER_MOVE;
+            }
+            //Console.WriteLine("finding d" + currentPos);
             if (start == null)
             {
                 start = currentPos;
@@ -20,12 +27,13 @@ namespace psi
             if (direction != null)
             {
                 Console.WriteLine("found direction");
-                output = new RobotControllerBehaviour(direction);
+                output = new RobotPathFindBehaviour(direction);
                 return ResponseCode.SERVER_MOVE;
             }
 
             start = currentPos;
-            return ResponseCode.SERVER_TURN_LEFT + ResponseCode.SERVER_MOVE;
+            turned = true;
+            return ResponseCode.SERVER_TURN_LEFT;
         }
     }
 }
