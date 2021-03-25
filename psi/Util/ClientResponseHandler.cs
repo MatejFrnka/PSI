@@ -7,26 +7,6 @@ using System.Threading.Tasks;
 
 namespace psi
 {
-    class RobotPos
-    {
-        public int y;
-        public int x;
-
-        public double distanceToOrigin()
-        {
-            return Math.Pow(Math.Pow(y, 2) + Math.Pow(x, 2), 0.5);
-        }
-        public static bool operator ==(RobotPos a, RobotPos b)
-        {
-            if (a is null || b is null)
-                return a is null && b is null;
-            return a.y == b.y && a.x == b.x;
-        }
-        public static bool operator !=(RobotPos a, RobotPos b)
-        {
-            return !(a == b);
-        }
-    }
     class ClientResponseHandler
     {
         public static string CLIENT_USERNAME(byte[] bytes, int length)
@@ -65,7 +45,7 @@ namespace psi
                 throw new InvalidInputException();
             int rx = Int32.Parse(value.Split(' ')[0]);
             int ry = Int32.Parse(value.Split(' ')[1]);
-            return new RobotPos() { y = rx, x = ry };
+            return new RobotPos() { x = rx, y = ry };
         }
         public static string CLIENT_MESSAGE(byte[] bytes, int length)
         {

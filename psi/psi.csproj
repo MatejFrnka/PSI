@@ -57,6 +57,7 @@
     <Compile Include="Util\RobotDirection.cs" />
     <Compile Include="Behaviour\RobotDirectionBehaviour.cs" />
     <Compile Include="Behaviour\RobotNavigationBehaviour.cs" />
+    <Compile Include="Util\RobotPos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

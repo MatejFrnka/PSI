@@ -10,12 +10,21 @@ namespace psi
 {
     class Program
     {
-
-
-
         static void Main(string[] args)
         {
-            
+            RobotPos robotPos = new RobotPos() { x = 0, y = 0 };
+            RobotPos up = new RobotPos() { x = 0, y = 1 };
+            RobotPos down = new RobotPos() { x = 0, y = -1 };
+            RobotPos left = new RobotPos() { x = -1, y = 0 };
+            RobotPos right = new RobotPos() { x = 1, y = 0 };
+            var a = RobotDirection.getDirection(robotPos, up);
+            Console.WriteLine(RobotDirection.getDirection(robotPos, up) is RobotDirectionUp);
+            Console.WriteLine(RobotDirection.getDirection(robotPos, down) is RobotDirectionDown);
+            Console.WriteLine(RobotDirection.getDirection(robotPos, left) is RobotDirectionLeft);
+            Console.WriteLine(RobotDirection.getDirection(robotPos, right) is RobotDirectionRight);
+
+
+
 
             TcpListener server = null;
             try
